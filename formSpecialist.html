@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+    <meta charset="utf-8">
+    <form id="formularioAutenticacion" method="post" action="https://agripure-mobile-service.onrender.com/auth/login">
+        <input type="text" id="userName" name="userName" placeholder="Usuario">
+        <input type="password" id="password" name="password" placeholder="Contraseña">
+        <button type="submit">Iniciar sesión</button>
+      </form>
+      
+      <form id="miFormulario" method="post" action="https://agripure-mobile-service.onrender.com/api/specialists">
+        <input type="text" id="cellphone_number" name="cellphone_number" placeholder="Cellphone">
+        <input type="text" id="contact_email" name="contact_email" placeholder="contact_email">
+        <input type="text" id="description" name="description" placeholder="description">
+        <input type="text" id="info_certifications" name="info_certifications" placeholder="info_certifications">
+        <input type="text" id="info_experience" name="info_experience" placeholder="info_experience">
+        <input type="text" id="info_favorite_plants" name="info_favorite_plants" placeholder="info_favorite_plants">
+        <input type="text" id="name" name="name" placeholder="name">
+        <input type="text" id="telephone_number" name="telephone_number" placeholder="telephone_number">
+        <input type="text" id="whatsapp_number" name="whatsapp_number" placeholder="whatsapp_number">
+        <button type="submit">Enviar</button>
+      </form>
+      
+      <script>
+        document.getElementById("formularioAutenticacion").addEventListener("submit", function(event) {
+          event.preventDefault(); // Evita el envío del formulario por defecto
+      
+          // Obtiene los valores de los campos de autenticación
+          var usuario = document.getElementById("userName").value;
+          var contrasena = document.getElementById("password").value;
+      
+          // Construye el objeto de datos de autenticación
+          var authData = {
+            usuario: userName,
+            contrasena: password
+          };
+      
+          // Realiza la solicitud POST de autenticación a tu endpoint correspondiente
+          fetch("https://agripure-mobile-service.onrender.com/auth/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(authData)
+          })
+            .then(function(response) {
+              if (response.ok) {
+                // La autenticación fue exitosa, habilita el formulario principal
+                document.getElementById("miFormulario").disabled = false;
+              } else {
+                // La autenticación falló, maneja el error adecuadamente
+                throw new Error("Error de autenticación");
+              }
+            })
+            .catch(function(error) {
+              // Maneja cualquier error de la solicitud
+              console.log(error);
+            });
+        });
+      
+        document.getElementById("miFormulario").addEventListener("submit", function(event) {
+          event.preventDefault(); // Evita el envío del formulario por defecto
+      
+          // Obtiene los valores de los campos
+          var cellphone_number = document.getElementById("cellphone_number").value;
+          var contact_email = document.getElementById("contact_email").value;
+          var description = document.getElementById("description").value;
+          var info_certifications = document.getElementById("info_certifications").value;
+          var info_experience = document.getElementById("info_experience").value;
+          var info_favorite_plants = document.getElementById("info_favorite_plants").value;
+          var name = document.getElementById("name").value;
+          var telephone_number = document.getElementById("telephone_number").value;
+          var whatsapp_number = document.getElementById("whatsapp_number").value;
+      
+          // Construye el objeto de datos a enviar
+          var data = {
+            cellphone_number: cellphone_number,
+            contact_email: contact_email,
+            description: description,
+            info_certifications: info_certifications,
+            info_experience: info_experience,
+            info_favorite_plants: info_favorite_plants,
+            name: name,
+            telephone_number: telephone_number,
+            whatsapp_number: whatsapp_number
+          };
+      
+          // Realiza la solicitud POST a tu API utilizando Fetch
+          fetch("https://agripure-mobile-service.onrender.com/api/specialists", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+          })
+            .then(function(response) {
+              return response.json();
+            })
+            .then(function(data) {
+              // Maneja la respuesta de tu API
+              console.log(data);
+            })
+            .catch(function(error) {
+              // Maneja cualquier error de la solicitud
+              console.log(error);
+            });
+        });
+      </script>
+      
+  </html>
